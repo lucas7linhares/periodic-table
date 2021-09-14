@@ -18,7 +18,7 @@ function App() {
     <Fragment>
       <div className={theme}>
         <div className="header">
-          <h1>Minha Tabela Periódica</h1>
+          <h1>Periodic Table of Internet</h1>
           <Switch onChange={changeTheme} defaultChecked />
         </div>
         <Tabela />

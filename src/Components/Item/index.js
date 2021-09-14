@@ -3,6 +3,8 @@ import { Modal, Button } from "antd";
 
 function Item(props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [bgColour, setBgColour] = useState("unset");
+  const [colour, setColour] = useState(props.item.Cor);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -12,20 +14,43 @@ function Item(props) {
     setIsModalVisible(false);
   };
 
+  const toggleHoverOn = () => {
+    let e = document.getElementsByClassName(
+      "periodic-element " + props.item.Grupo
+    );
+    if (e[0].getAttribute("readonly") !== "true") {
+      setBgColour(props.item.Cor);
+      setColour("#202e38");
+    }
+  };
+
+  const toggleHoverOff = () => {
+    let e = document.getElementsByClassName(
+      "periodic-element " + props.item.Grupo
+    );
+    if (e[0].getAttribute("readonly") !== "true") {
+      setBgColour("unset");
+      setColour(props.item.Cor);
+    }
+  };
+
   const style = {
-    color: props.item.Cor,
-    backgroundColor: props.item.Cor,
+    color: colour,
     gridColumn: props.item.Coluna,
     gridRow: props.item.Linha,
+    background: bgColour,
   };
 
   return (
     <Fragment>
       <Button
-        className="periodic-element"
+        className={"periodic-element " + props.item.Grupo}
         onClick={showModal}
         style={style}
-        grupo={props.item.Grupo}
+        onMouseEnter={toggleHoverOn}
+        onMouseLeave={toggleHoverOff}
+        onFocus={toggleHoverOn}
+        onBlur={toggleHoverOff}
       >
         <span className="title">{props.item.Abreviacao}</span>
         <span className="description">{props.item.Nome}</span>

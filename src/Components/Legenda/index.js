@@ -30,6 +30,21 @@ function Legenda() {
     getData();
   }, []);
 
+  const toggleFocus = (grupo, cor) => {
+    var elementos = document.getElementsByClassName(grupo);
+    Object.keys(elementos).forEach(function (key) {
+      if (elementos[key].getAttribute("readonly") === "true") {
+        elementos[key].style.backgroundColor = "unset";
+        elementos[key].style.color = cor;
+        elementos[key].removeAttribute("readonly");
+      } else {
+        elementos[key].style.backgroundColor = cor;
+        elementos[key].style.color = "#202e38";
+        elementos[key].setAttribute("readonly", "true");
+      }
+    });
+  };
+
   return (
     <Fragment>
       <div className="legend-table">
@@ -41,7 +56,12 @@ function Legenda() {
                   className="legend-table__marker"
                   style={{ backgroundColor: e.Cor }}
                 ></span>
-                <span className="legend-table__text">{e.Grupo}</span>
+                <span
+                  className="legend-table__text"
+                  onClick={() => toggleFocus(e.Grupo, e.Cor)}
+                >
+                  {e.Grupo}
+                </span>
               </Fragment>
             );
           })}
