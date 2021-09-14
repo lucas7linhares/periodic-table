@@ -1,6 +1,17 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import { Modal, Button } from "antd";
 
 function Item(props) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const style = {
     color: props.item.Cor,
     backgroundColor: props.item.Cor,
@@ -9,12 +20,25 @@ function Item(props) {
   };
 
   return (
-    <div className="periodic-element" style={style} grupo={props.item.Grupo}>
-      <div className="periodic-element-inner">
-        <div className="title">{props.item.Abreviacao}</div>
-        <div className="description">{props.item.Nome}</div>
-      </div>
-    </div>
+    <Fragment>
+      <Button
+        className="periodic-element"
+        onClick={showModal}
+        style={style}
+        grupo={props.item.Grupo}
+      >
+        <span className="title">{props.item.Abreviacao}</span>
+        <span className="description">{props.item.Nome}</span>
+      </Button>
+      <Modal
+        title={props.item.Nome}
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={[]}
+      >
+        <p>{props.item.Descricao}</p>
+      </Modal>
+    </Fragment>
   );
 }
 
